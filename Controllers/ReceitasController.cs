@@ -23,7 +23,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 var receitaAdicionada = _receitaRepository.AddReceita(postReceitaDto);
                 return CreatedAtAction(nameof(GetReceitaById), new { Id = receitaAdicionada.Id }, receitaAdicionada);
             }
-            catch (KeyNotFoundException e) { return NotFound(e.Message); }
             catch (InvalidDataException e) { return BadRequest(e.Message); }
             catch (ArgumentException e) { return BadRequest(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
@@ -76,7 +75,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
             }
             catch (KeyNotFoundException e) { return NotFound(e.Message); }
             catch (InvalidDataException e) { return BadRequest(e.Message); }
-            catch (ArgumentException e) { return BadRequest(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
         }
 
@@ -88,8 +86,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 var receitasComPalavraChaveNaDescricao = _receitaRepository.GetReceitaByDescricao(descricao);
                 return Ok(receitasComPalavraChaveNaDescricao);
             }
-            catch (KeyNotFoundException e) { return NotFound(e.Message); }
-            catch (InvalidDataException e) { return BadRequest(e.Message); }
             catch (ArgumentException e) { return NotFound(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
         }
@@ -102,8 +98,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 var receitasPorData = _receitaRepository.GetReceitaByDate(ano, mes);
                 return Ok(receitasPorData);
             }
-            catch (KeyNotFoundException e) { return NotFound(e.Message); }
-            catch (InvalidDataException e) { return BadRequest(e.Message); }
             catch (ArgumentException e) { return NotFound(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
         }

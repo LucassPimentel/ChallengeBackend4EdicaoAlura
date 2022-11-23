@@ -3,6 +3,7 @@ using ChallengeBackend4EdicaoAlura.Dtos.Receitas;
 using ChallengeBackend4EdicaoAlura.Dtos.Resumos;
 using ChallengeBackend4EdicaoAlura.Enums;
 using ChallengeBackend4EdicaoAlura.Interfaces;
+using ChallengeBackend4EdicaoAlura.Util;
 
 namespace ChallengeBackend4EdicaoAlura.Repositories
 {
@@ -11,17 +12,20 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
         protected readonly IDespesaRepository _despesaRepository;
         protected readonly IReceitaRepository _receitaRepository;
         protected readonly DataBaseContext _dbContext;
+        private readonly IValidacao _validacao;
 
-        public ResumoRepository(IReceitaRepository receitaRepository, IDespesaRepository despesaRepository, DataBaseContext dbContext)
+        public ResumoRepository(IReceitaRepository receitaRepository, IDespesaRepository despesaRepository, DataBaseContext dbContext, IValidacao validacao)
         {
             _receitaRepository = receitaRepository;
             _despesaRepository = despesaRepository;
             _dbContext = dbContext;
+            _validacao = validacao;
         }
 
         public void AdicionarGastosPorCategorias(ReadResumoDto resumo, IEnumerable<CategoriaDespesa> categorias, int ano, int mes)
         {
             var despesasPorData = _despesaRepository.GetDespesaByDate(ano, mes);
+
 
             foreach (var categoria in categorias)
             {
@@ -48,6 +52,7 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
         public decimal GerarDespesaTotal(ReadResumoDto resumo, int ano, int mes)
         {
             var despesasPorData = _despesaRepository.GetDespesaByDate(ano, mes);
+
 
             foreach (var despesa in despesasPorData)
             {
