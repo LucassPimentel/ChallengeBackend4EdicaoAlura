@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TestesChallengeBackEnd4Edicao.Fakers;
 
-namespace TestesChallengeBackEnd4Edicao.Receitas
+namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
 {
     public class TesteReceitasController
     {
@@ -19,11 +19,10 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
             receitaController = new ReceitasController(receitaRepository.Object);
         }
 
-
         // When-Given-then
         // AAA
         [Fact]
-        public void PostReceita_ReceitaIsValid_Executed_ReturnStatusCreated()
+        public void PostReceita_ReceitaWasAdded_Executed_ReturnStatusCreated()
         {
             var postReceitaDto = new PostReceitaDto()
             {
@@ -43,7 +42,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void PostReceita_ReceitaIsInvalid_Executed_ThrowAnInvalidDataException()
+        public void PostReceita_TypeItWasNotReceita_ThrowAnInvalidDataException()
         {
             receitaRepository.Setup(x => x.AddReceita(It.IsAny<PostReceitaDto>())).Throws<InvalidDataException>();
 
@@ -55,19 +54,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void PostReceita_ReceitaIsInvalid_Executed_ThrowAnException()
-        {
-            receitaRepository.Setup(x => x.AddReceita(It.IsAny<PostReceitaDto>())).Throws<Exception>();
-
-            var result = receitaController.CreateReceita(It.IsAny<PostReceitaDto>());
-            var objectResult = result as ObjectResult;
-
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
-        }
-
-        [Fact]
-        public void PostReceita_ReceitaIsInvalid_Executed_ThrowAnArgumentException()
+        public void PostReceita_ReceitaAlreadyExistedInDb_ThrowAnArgumentException()
         {
             receitaRepository.Setup(x => x.AddReceita(It.IsAny<PostReceitaDto>())).Throws<ArgumentException>();
 
@@ -79,7 +66,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void PutReceita_ReceitaIsValid_Executed_ReturnStatusNoContent()
+        public void PutReceita_ReceitaWasModified_ReturnStatusNoContent()
         {
             receitaRepository.Setup(x => x.PutReceita(It.IsAny<int>(), It.IsAny<PutReceitaDto>()));
 
@@ -92,7 +79,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void PutReceita_ReceitaIsNull_Executed_ThrowAnKeyNotFoundException()
+        public void PutReceita_ReceitaWasNull_ThrowAKeyNotFoundException()
         {
             receitaRepository.Setup(x => x.PutReceita(It.IsAny<int>(), It.IsAny<PutReceitaDto>())).Throws<KeyNotFoundException>();
 
@@ -104,7 +91,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void PutReceita_TypeItIsNotReceita_Executed_ThrowAnInvalidDataException()
+        public void PutReceita_TypeItWasNotReceita_ThrowAnInvalidDataException()
         {
             receitaRepository.Setup(x => x.PutReceita(It.IsAny<int>(), It.IsAny<PutReceitaDto>())).Throws<InvalidDataException>();
 
@@ -117,7 +104,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void PutReceita_ReceitaAlreadyExistsInDb_Executed_ThrowAnArgumentException()
+        public void PutReceita_ReceitaAlreadyExistsInDb_ThrowAnArgumentException()
         {
             receitaRepository.Setup(x => x.PutReceita(It.IsAny<int>(), It.IsAny<PutReceitaDto>())).Throws<ArgumentException>();
 
@@ -129,7 +116,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void DeleteReceita_ReceitaIsExcluded_ReturnStatusNoContent()
+        public void DeleteReceita_ReceitaWasDeleted_ReturnStatusNoContent()
         {
             receitaRepository.Setup(x => x.DeleteReceita(It.IsAny<int>()));
 
@@ -142,7 +129,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void DeleteReceita_TypeItIsNotReceita_ThrowAnInvalidDataException()
+        public void DeleteReceita_TypeItWasNotReceita_ThrowAnInvalidDataException()
         {
             receitaRepository.Setup(x => x.DeleteReceita(It.IsAny<int>())).Throws<InvalidDataException>();
 
@@ -154,7 +141,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void DeleteReceita_ReceitaIsNull_ThrowAnKeyNotFoundException()
+        public void DeleteReceita_ReceitaWasNull_ThrowAKeyNotFoundException()
         {
             receitaRepository.Setup(x => x.DeleteReceita(It.IsAny<int>())).Throws<KeyNotFoundException>();
 
@@ -166,7 +153,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void GetReceitas_ReceitasAreValid_Executed_ReturnStatusOkAndAllReceitas()
+        public void GetReceitas_ReturnStatusOkAndAllReceitas()
         {
             var fakeListReadReceitaDto = FakerReadReceitaDto.Faker.Generate(5);
             receitaRepository.Setup(x => x.GetReceitas()).Returns(fakeListReadReceitaDto);
@@ -181,7 +168,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void GetReceitaById_IdIsValid_Executed_ReturnStatusOkAndOneReceita()
+        public void GetReceitaById_ReceitaWasReturned_ReturnStatusOkAndReceita()
         {
             var resultReadReceitaDto = FakerReadReceitaDto.Faker.Generate();
 
@@ -196,7 +183,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void GetReceitaById_EntityFoundIsNull_Executed_ThrowAnKeyNotFoundException()
+        public void GetReceitaById_ReceitaFoundWasNull_Executed_ThrowAnKeyNotFoundException()
         {
             receitaRepository.Setup(x => x.GetReceitaById(It.IsAny<int>())).Throws(new KeyNotFoundException("Não encontrado..."));
 
@@ -209,7 +196,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void GetReceitaById_IdIsInvalid_Executed_ThrowAnInvalidDataException()
+        public void GetReceitaById_IdWasInvalid_ThrowAnInvalidDataException()
         {
             receitaRepository.Setup(x => x.GetReceitaById(It.IsAny<int>())).Throws<InvalidDataException>();
 
@@ -221,7 +208,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void GetReceitaByDescricao_ReceitaFoundByDescricao_Executed_ReturnStatusOkAndListOfReadReceitasDtoWithThatKeyWord()
+        public void GetReceitaByDescricao_ReceitaWasFound_ReturnStatusOkAndReadReceitasWithThatKeyWord()
         {
             var listReadReceitaDto = FakerReadReceitaDto.Faker.Generate(3);
 
@@ -248,7 +235,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void GetReceitaByDescricao_SomethingIsFail_Executed_ThrowAnException()
+        public void GetReceitaByDescricao_SomethingWasWrong_ThrowAnException()
         {
             receitaRepository.Setup(x => x.GetReceitaByDescricao(It.IsAny<string>())).Throws<Exception>();
 
@@ -260,7 +247,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void GetReceitaByDate_ReceitaFoundByDate_Executed_ReturnStatusOkAndListOfReadReceita()
+        public void GetReceitaByDate_ReceitaWasFound_ReturnStatusOkAndListReadReceitaWithThatDate()
         {
             var listReadReceitaDto = FakerReadReceitaDto.Faker.Generate(5);
 
@@ -275,7 +262,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void GetReceitaByDate_ReturnedListIsEmpty_Executed_ThrowAnArgumentException()
+        public void GetReceitaByDate_ReceitaNotFound_ThrowAnArgumentException()
         {
             receitaRepository.Setup(x => x.GetReceitaByDate(It.IsAny<int>(), It.IsAny<int>())).Throws<ArgumentException>();
 
@@ -287,7 +274,7 @@ namespace TestesChallengeBackEnd4Edicao.Receitas
         }
 
         [Fact]
-        public void GetReceitaByDate_SomethingIsFail_Executed_ThrowAnException()
+        public void GetReceitaByDate_SomethingWasWrong_ThrowAnException()
         {
             receitaRepository.Setup(x => x.GetReceitaByDate(It.IsAny<int>(), It.IsAny<int>())).Throws<Exception>();
 

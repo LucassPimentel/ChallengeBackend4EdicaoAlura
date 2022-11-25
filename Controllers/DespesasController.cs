@@ -87,8 +87,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 var despesaComPalavraChaveNaDescricao = _despesaRepository.GetDespesaByDescricao(descricao);
                 return Ok(despesaComPalavraChaveNaDescricao);
             }
-            catch (KeyNotFoundException e) { return NotFound(e.Message); }
-            catch (InvalidDataException e) { return BadRequest(e.Message); }
             catch (ArgumentException e) { return NotFound(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
         }
@@ -101,8 +99,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 var despesasPorData = _despesaRepository.GetDespesaByDate(ano, mes);
                 return Ok(despesasPorData);
             }
-            catch (KeyNotFoundException e) { return NotFound(e.Message); }
-            catch (InvalidDataException e) { return BadRequest(e.Message); }
             catch (ArgumentException e) { return NotFound(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
         }

@@ -43,6 +43,7 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
         {
             var despesasPorData = _dbContext.Despesas.Where(d => d.Data.Year == ano && d.Data.Month == mes).ToList();
 
+            _validacao.ValidaSeAListaEstaVazia(despesasPorData);
 
             var dtoDespesasPorData = _mapper.Map<List<ReadDespesaDto>>(despesasPorData);
 

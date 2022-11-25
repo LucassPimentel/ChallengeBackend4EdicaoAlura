@@ -15,7 +15,7 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
         }
 
         [HttpGet("{ano}/{mes}")]
-        public IActionResult GetResumoPorData(int ano, int mes)
+        public IActionResult GetResumoByDate(int ano, int mes)
         {
             var resumo = _resumoRepository.GerarResumo(ano, mes);
 
