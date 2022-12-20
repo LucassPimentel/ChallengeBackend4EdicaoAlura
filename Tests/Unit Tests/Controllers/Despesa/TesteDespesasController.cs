@@ -51,7 +51,7 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var objectResult = result as ObjectResult;
 
             Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
 
         }
 

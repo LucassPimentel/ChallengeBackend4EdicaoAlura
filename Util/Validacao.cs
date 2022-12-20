@@ -57,8 +57,6 @@ namespace ChallengeBackend4EdicaoAlura.Util
                 ValidaSeAListaEstaVazia<Despesa>(itens);
             }
 
-
-
             foreach (var item in itens)
             {
                 if (item.Descricao == descricao && item.Data.Month == data.Month)
