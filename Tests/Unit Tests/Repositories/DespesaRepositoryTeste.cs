@@ -19,14 +19,11 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Unit_Tests.Repositories
 {
     public class DespesaRepositoryTeste
     {
-        // TODO: fazer testes do repositorio, pesquisar como fazer
-        //https://rubikscode.net/2022/07/11/implementing-and-testing-repository-pattern-using-entity-framework/
         private readonly AutoFake _autoFake;
         private readonly IMapper _mapper;
         private readonly IValidacao _validacao;
         private readonly DataBaseContext dbContextMock;
         private readonly DespesaRepository _despesaRepository;
-
 
         public DespesaRepositoryTeste()
         {
@@ -45,16 +42,16 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Unit_Tests.Repositories
 
             dbContextMock = new DataBaseContext(dbOptions.Options);
 
-            dbContextMock.Despesas.Add(FakerDespesa.Faker.Generate());
-            dbContextMock.Despesas.Add(FakerDespesa.Faker.Generate());
-            dbContextMock.Despesas.Add(FakerDespesa.Faker.Generate());
-            dbContextMock.SaveChanges();
-
             _despesaRepository = new DespesaRepository(dbContextMock, _mapper, _validacao);
         }
         [Fact]
         public void GetDespesas_WhenSuccessfullyExecuted_ShouldReturnAllDespesas()
         {
+            dbContextMock.Despesas.Add(FakerDespesa.Faker.Generate());
+            dbContextMock.Despesas.Add(FakerDespesa.Faker.Generate());
+            dbContextMock.Despesas.Add(FakerDespesa.Faker.Generate());
+            dbContextMock.SaveChanges();
+
             var result = _despesaRepository.GetDespesas();
 
             result.Should().NotBeEmpty().And.NotBeNull();
@@ -109,6 +106,27 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Unit_Tests.Repositories
 
             result.Should().NotBeNull();
             result.Should().BeEquivalentTo(readDespesa);
+        }
+
+        [Fact]
+        public void PutDespesa_WhenDespesaWasUpdated_ShouldReturnNothing()
+        {
+            var despesaThatWilBelUpdate = FakerDespesa.Faker.Generate();
+            dbContextMock.Despesas.Add(despesaThatWilBelUpdate);
+            dbContextMock.SaveChanges();
+
+
+            var updatedDespesa = FakerDespesa.Faker.Generate();
+            dbContextMock.Despesas.Add(updatedDespesa);
+            dbContextMock.SaveChanges();
+
+            var putDespesaDto = _mapper.Map<PutDespesaDto>(updatedDespesa);
+
+            _despesaRepository.PutDespsa(despesaThatWilBelUpdate.Id, putDespesaDto);
+
+            despesaThatWilBelUpdate.Categoria.Should().Be(updatedDespesa.Categoria);
+            despesaThatWilBelUpdate.Descricao.Should().Be(updatedDespesa.Descricao);
+
         }
     }
 }
