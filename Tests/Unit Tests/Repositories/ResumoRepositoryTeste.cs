@@ -2,6 +2,7 @@
 using AutoMapper;
 using ChallengeBackend4EdicaoAlura.Context;
 using ChallengeBackend4EdicaoAlura.Dtos.Resumos;
+using ChallengeBackend4EdicaoAlura.Enums;
 using ChallengeBackend4EdicaoAlura.Interfaces;
 using ChallengeBackend4EdicaoAlura.Profiles;
 using ChallengeBackend4EdicaoAlura.Repositories;
@@ -11,6 +12,7 @@ using FakeItEasy;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using TestesChallengeBackEnd4Edicao.Fakers;
 
 namespace ChallengeBackend4EdicaoAlura.Tests.Unit_Tests.Repositories
 {
@@ -81,6 +83,60 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Unit_Tests.Repositories
 
             result.Should().Be(expectedDespesaTotal);
         }
-        // VERIFICAR NOS TESTES DE DESPESA E RECEITA REPOSITORY SE NAO TEM COMO USAR O MOCK PARA SIMULAR O RETORNO DO BANCO DE DADOS...
+
+        [Fact]
+        public void GerarReceitaTotal_WhenSuccefullyExecuted_ShouldReturnReceitaTotal()
+        {
+            var receitas = FakerReadReceitaDto.Faker.Generate(3);
+
+            decimal expectedReceitaTotal = 0;
+
+            var resumo = new ReadResumoDto();
+
+            _receitaRepository.Setup(x => x.GetReceitaByDate(It.IsAny<int>(), It.IsAny<int>())).Returns(receitas);
+
+            var result = _resumoRepository.GerarReceitaTotal(resumo, DateTime.UtcNow.Year, DateTime.UtcNow.Month);
+
+            foreach (var receita in receitas)
+            {
+                expectedReceitaTotal += receita.Valor;
+            }
+
+            result.Should().Be(expectedReceitaTotal);
+        }
+
+        [Fact]
+        public void AdicionarGastosPorCategorias_WhenSuccefullyExecuted_ShouldAddSpentByCategory()
+        {
+            var despesas = FakerReadDespesaDto.Faker.Generate(3);
+
+            var resumo = new ReadResumoDto();
+
+            _despesaRepository.Setup(x => x.GetDespesaByDate(It.IsAny<int>(), It.IsAny<int>())).Returns(despesas);
+
+            var categorias = new List<CategoriaDespesa>() { CategoriaDespesa.Transporte, CategoriaDespesa.Lazer };
+
+            _resumoRepository.AdicionarGastosPorCategorias(resumo, categorias, DateTime.UtcNow.Year, DateTime.UtcNow.Month);
+
+            resumo.GastoPorCategoria.Count.Should().BeGreaterThan(0);
+        }
+
+        [Fact]
+        public void IdentificarCategorias_WhenSuccefullyExecuted_ShouldReturnCategoriasDespesas()
+        {
+            var despesas = FakerReadDespesaDto.Faker.Generate(3);
+
+            _despesaRepository.Setup(x => x.GetDespesaByDate(It.IsAny<int>(), It.IsAny<int>())).Returns(despesas);
+
+            var categorias = _resumoRepository.IdentificarCategorias(DateTime.UtcNow.Year, DateTime.UtcNow.Month);
+
+            categorias.Count().Should().BeGreaterThan(0);
+        }
+
+        [Fact]
+        public void GerarResumo_WhenSuccefullyExecuted_ShouldReturnReadResumoDto()
+        {
+
+        }
     }
 }
