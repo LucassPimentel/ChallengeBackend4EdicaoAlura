@@ -53,7 +53,6 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
         {
             var despesasPorData = _despesaRepository.GetDespesaByDate(ano, mes);
 
-
             foreach (var despesa in despesasPorData)
             {
                 resumo.DespesaTotal += despesa.Valor;

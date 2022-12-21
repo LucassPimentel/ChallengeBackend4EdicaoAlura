@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChallengeBackend4EdicaoAlura", "ChallengeBackend4EdicaoAlura.csproj", "{5EED5952-D8FC-463D-840F-759210DC6D4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserControl", "..\UserControl\UserControl.csproj", "{309DAFF6-4232-4949-9856-854AA43C42F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserControl", "..\UserControl\UserControl.csproj", "{309DAFF6-4232-4949-9856-854AA43C42F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

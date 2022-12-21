@@ -73,6 +73,11 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Unit_Tests.Repositories
         [Fact]
         public void GetDespesaByDate_WhenSuccessfullyExecuted_ShouldReturnAnEquivalentDespesa()
         {
+            dbContextMock.Despesas.Add(FakerDespesa.Faker.Generate());
+            dbContextMock.Despesas.Add(FakerDespesa.Faker.Generate());
+            dbContextMock.Despesas.Add(FakerDespesa.Faker.Generate());
+            dbContextMock.SaveChanges();
+
             var result = _despesaRepository.GetDespesaByDate(DateTime.UtcNow.Year, DateTime.UtcNow.Month);
 
             result.Should().NotBeNull().And.NotBeEmpty();
@@ -127,6 +132,20 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Unit_Tests.Repositories
             despesaThatWilBelUpdate.Categoria.Should().Be(updatedDespesa.Categoria);
             despesaThatWilBelUpdate.Descricao.Should().Be(updatedDespesa.Descricao);
 
+        }
+
+        [Fact]
+        public void DeleteDespesa_WhenDespesaWasDeleted_ShouldReturnNothing()
+        {
+            var despesa = FakerDespesa.Faker.Generate();
+            dbContextMock.Despesas.Add(despesa);
+            dbContextMock.SaveChanges();
+
+            _despesaRepository.DeleteDespesa(despesa.Id);
+
+            var wasDespesaDeleted = dbContextMock.Despesas.Find(despesa.Id);
+
+            wasDespesaDeleted.Should().BeNull();
         }
     }
 }
