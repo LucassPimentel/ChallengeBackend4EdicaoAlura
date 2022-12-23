@@ -136,7 +136,17 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Unit_Tests.Repositories
         [Fact]
         public void GerarResumo_WhenSuccefullyExecuted_ShouldReturnReadResumoDto()
         {
+            var despesas = FakerReadDespesaDto.Faker.Generate(3);
 
+            _despesaRepository.Setup(x => x.GetDespesaByDate(It.IsAny<int>(), It.IsAny<int>())).Returns(despesas);
+
+            var receitas = FakerReadReceitaDto.Faker.Generate(3);
+
+            _receitaRepository.Setup(x => x.GetReceitaByDate(It.IsAny<int>(), It.IsAny<int>())).Returns(receitas);
+
+            var result = _resumoRepository.GerarResumo(DateTime.UtcNow.Year, DateTime.UtcNow.Month);
+
+            result.Should().NotBeNull();
         }
     }
 }

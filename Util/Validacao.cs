@@ -36,11 +36,6 @@ namespace ChallengeBackend4EdicaoAlura.Util
 
         }
 
-        public void ValidaSeAListaEstaVazia<T>(List<T> lista)
-        {
-            if (lista.Count == 0) throw new ArgumentException("Desculpe, não encontramos nada.");
-        }
-
         public void ValidaSeJaExisteNoBancoDeDados<T>(string descricao, DateTime data)
         {
             dynamic itens;
@@ -49,12 +44,10 @@ namespace ChallengeBackend4EdicaoAlura.Util
             if (tipo == "Receita")
             {
                 itens = _dbContext.Receitas.ToList();
-                ValidaSeAListaEstaVazia<Receita>(itens);
             }
             else
             {
                 itens = _dbContext.Despesas.ToList();
-                ValidaSeAListaEstaVazia<Despesa>(itens);
             }
 
             foreach (var item in itens)

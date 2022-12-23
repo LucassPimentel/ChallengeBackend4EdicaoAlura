@@ -46,7 +46,7 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
             var receitasPorData = _dbContext.Receitas.Where(d =>
             d.Data.Year == ano && d.Data.Month == mes).ToList();
 
-            _validacao.ValidaSeAListaEstaVazia(receitasPorData);
+            //_validacao.ValidaSeAListaEstaVazia(receitasPorData);
 
             var dtoReceitasPorData = _mapper.Map<List<ReadReceitaDto>>(receitasPorData);
 
@@ -59,7 +59,7 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
                 .Where(d => d.Descricao.ToUpper()
                 .Contains(descricao.ToUpper())).ToList();
 
-            _validacao.ValidaSeAListaEstaVazia(receitasComPalavraChaveNaDescricao);
+            //_validacao.ValidaSeAListaEstaVazia(receitasComPalavraChaveNaDescricao);
 
             var dtoreceitasComPalavraChaveNaDescricao = _mapper.Map<List<ReadReceitaDto>>(receitasComPalavraChaveNaDescricao);
 

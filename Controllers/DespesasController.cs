@@ -22,7 +22,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 var despesaCriada = _despesaRepository.CreateDespesa(createDespesaDto);
                 return CreatedAtAction(nameof(GetDespesaById), new { Id = despesaCriada.Id }, despesaCriada);
             }
-            catch (KeyNotFoundException e) { return NotFound(e.Message); }
             catch (InvalidDataException e) { return BadRequest(e.Message); }
             catch (ArgumentException e) { return BadRequest(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
