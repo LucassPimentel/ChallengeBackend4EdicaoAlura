@@ -8,10 +8,10 @@ namespace ChallengeBackend4EdicaoAlura.Profiles
     {
         public ReceitasProfle()
         {
-            CreateMap<PostReceitaDto, Receita>().ReverseMap();
-            CreateMap<Receita, ReadReceitaDto>().ReverseMap();
+            CreateMap<PostReceitaDto, ReceitaModel>().ReverseMap();
+            CreateMap<ReceitaModel, ReadReceitaDto>().ReverseMap();
             CreateMap<ReadReceitaDto, PutReceitaDto>().ReverseMap();
-            CreateMap<PutReceitaDto, Receita>().ReverseMap();
+            CreateMap<PutReceitaDto, ReceitaModel>().ReverseMap();
         }
     }
 }

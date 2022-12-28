@@ -2,19 +2,20 @@
 using ChallengeBackend4EdicaoAlura.Dtos.Despesas;
 using ChallengeBackend4EdicaoAlura.Dtos.Receitas;
 using ChallengeBackend4EdicaoAlura.Interfaces;
-using ChallengeBackend4EdicaoAlura.Models;
-using ChallengeBackend4EdicaoAlura.Tests.Fakers;
+using ChallengeBackend4EdicaoAlura.Tests.Fakers.Despesa;
+using ChallengeBackend4EdicaoAlura.Tests.Fakers.Despesas;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 namespace ChallengeBackend4EdicaoAlura.Tests
 {
-    public class TesteDespesasController
+    public class DespesasControllerTests
     {
         Mock<IDespesaRepository> despesaRepository;
         DespesasController despesaController;
 
-        public TesteDespesasController()
+        public DespesasControllerTests()
         {
             despesaRepository = new Mock<IDespesaRepository>();
             despesaController = new DespesasController(despesaRepository.Object);
@@ -23,35 +24,29 @@ namespace ChallengeBackend4EdicaoAlura.Tests
         [Fact]
         public void PostDespesa_DespesaWasAdded_ReturnStatusCreated()
         {
-            var createdDespesa = new Despesa()
-            {
-                Id = 1,
-                Categoria = Enums.CategoriaDespesa.Outras,
-                Data = DateTime.Now,
-                Descricao = "Descricao",
-                Valor = 100
-            };
+            var createdDespesa = FakerDespesa.Faker.Generate();
 
             despesaRepository.Setup(x => x.CreateDespesa(It.IsAny<PostDespesaDto>())).Returns(createdDespesa);
 
             var result = despesaController.CreateDespesa(It.IsAny<PostDespesaDto>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status201Created, objectResult.StatusCode);
-            Assert.Equal(createdDespesa, objectResult.Value);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status201Created);
+            createdDespesa.Should().BeEquivalentTo(objectResult.Value);
+
         }
 
         [Fact]
-        public void PostDespesa_TypeItWasNotDespesa_ThrowAnInvalidDataException()
+        public void PostDespesa_TypeItWasNotDespesa_ThrowAnKeyNotFoundException()
         {
-            despesaRepository.Setup(x => x.CreateDespesa(It.IsAny<PostDespesaDto>())).Throws<InvalidDataException>();
+            despesaRepository.Setup(x => x.CreateDespesa(It.IsAny<PostDespesaDto>())).Throws<KeyNotFoundException>();
 
             var result = despesaController.CreateDespesa(It.IsAny<PostDespesaDto>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
 
         }
 
@@ -63,8 +58,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.CreateDespesa(It.IsAny<PostDespesaDto>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
@@ -75,8 +70,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.PutDespesa(It.IsAny<int>(), It.IsAny<PutDespesaDto>());
             var statusCode = result as StatusCodeResult;
 
-            Assert.NotNull(statusCode);
-            Assert.Equal(StatusCodes.Status204NoContent, statusCode.StatusCode);
+            statusCode.Should().NotBeNull();
+            statusCode.StatusCode.Should().Be(StatusCodes.Status204NoContent);
         }
 
         [Fact]
@@ -87,20 +82,20 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.PutDespesa(It.IsAny<int>(), new PutDespesaDto());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
-        public void PutDespesa_TypeWasNotDespesa_ThrowInvalidDataException()
+        public void PutDespesa_TypeWasNotDespesa_ThrowKeyNotFoundException()
         {
-            despesaRepository.Setup(x => x.PutDespsa(It.IsAny<int>(), It.IsAny<PutDespesaDto>())).Throws<InvalidDataException>();
+            despesaRepository.Setup(x => x.PutDespsa(It.IsAny<int>(), It.IsAny<PutDespesaDto>())).Throws<KeyNotFoundException>();
 
             var result = despesaController.PutDespesa(It.IsAny<int>(), It.IsAny<PutDespesaDto>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -111,8 +106,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.PutDespesa(It.IsAny<int>(), It.IsAny<PutDespesaDto>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
@@ -123,20 +118,20 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.DeleteDespesa(It.IsAny<int>());
             var statusCode = result as StatusCodeResult;
 
-            Assert.NotNull(statusCode);
-            Assert.Equal(StatusCodes.Status204NoContent, statusCode.StatusCode);
+            statusCode.Should().NotBeNull();
+            statusCode.StatusCode.Should().Be(StatusCodes.Status204NoContent);
         }
 
         [Fact]
-        public void DeleteDespesa_TypeItWasNotDespesa_ThrowAnInvalidDataException()
+        public void DeleteDespesa_TypeItWasNotDespesa_ThrowAnKeyNotFoundException()
         {
-            despesaRepository.Setup(x => x.DeleteDespesa(It.IsAny<int>())).Throws<InvalidDataException>();
+            despesaRepository.Setup(x => x.DeleteDespesa(It.IsAny<int>())).Throws<KeyNotFoundException>();
 
             var result = despesaController.DeleteDespesa(It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -147,8 +142,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.DeleteDespesa(It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -166,21 +161,21 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.GetDespesaById(It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status200OK);
 
         }
 
         [Fact]
-        public void GetDespesaById_IdWasInvalid_ThrowAnInvalidDataException()
+        public void GetDespesaById_IdWasInvalid_ThrowAnKeyNotFoundException()
         {
-            despesaRepository.Setup(x => x.GetDespesaById(It.IsAny<int>())).Throws<InvalidDataException>();
+            despesaRepository.Setup(x => x.GetDespesaById(It.IsAny<int>())).Throws<KeyNotFoundException>();
 
             var result = despesaController.GetDespesaById(It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -191,8 +186,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.GetDespesaById(It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -205,9 +200,9 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.GetDespesas();
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(listReadDespesa, objectResult.Value);
-            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.Value.Should().BeEquivalentTo(listReadDespesa);
+            objectResult.StatusCode.Should().Be(StatusCodes.Status200OK);
         }
 
         [Fact]
@@ -220,9 +215,9 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.GetDespesaByDescricao(It.IsAny<string>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
-            Assert.Equal(listReadDespesa, objectResult.Value);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+            objectResult.Value.Should().BeEquivalentTo(listReadDespesa);
 
         }
 
@@ -234,8 +229,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.GetDespesaByDescricao(It.IsAny<string>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -246,8 +241,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.GetDespesaByDescricao(It.IsAny<string>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -260,9 +255,9 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.GetDespesaByDate(It.IsAny<int>(), It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
-            Assert.Equal(listReadDespesa, objectResult.Value);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+            objectResult.Value.Should().BeEquivalentTo(listReadDespesa);
         }
 
         [Fact]
@@ -273,8 +268,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.GetDespesaByDate(It.IsAny<int>(), It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -285,8 +280,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests
             var result = despesaController.GetDespesaByDate(It.IsAny<int>(), It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
     }

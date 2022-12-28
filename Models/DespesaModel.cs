@@ -2,7 +2,7 @@
 
 namespace ChallengeBackend4EdicaoAlura.Models
 {
-    public class Despesa
+    public class DespesaModel
     {
         public int Id { get; set; }
         public CategoriaDespesa Categoria { get; set; } = CategoriaDespesa.Outras;

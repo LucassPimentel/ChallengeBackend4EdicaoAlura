@@ -1,6 +1,7 @@
 ﻿using ChallengeBackend4EdicaoAlura.Controllers;
 using ChallengeBackend4EdicaoAlura.Interfaces;
-using ChallengeBackend4EdicaoAlura.Tests.Fakers;
+using ChallengeBackend4EdicaoAlura.Tests.Fakers.Resumo;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -28,9 +29,9 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Resumo
             var result = resumoController.GetResumoByDate(It.IsAny<int>(), It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
-            Assert.Equal(resumo, objectResult.Value);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+            objectResult.Value.Should().Be(resumo);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using ChallengeBackend4EdicaoAlura.Dtos.Resumos;
 
-namespace ChallengeBackend4EdicaoAlura.Tests.Fakers
+namespace ChallengeBackend4EdicaoAlura.Tests.Fakers.Resumo
 {
     public class FakerReadResumoDto
     {

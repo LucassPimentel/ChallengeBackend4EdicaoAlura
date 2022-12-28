@@ -17,10 +17,6 @@ namespace ChallengeBackend4EdicaoAlura.Util
         {
             Type tipo = typeof(T);
 
-            if (tipo.Name != "Receita" && tipo.Name != "Despesa")
-            {
-                throw new InvalidDataException("Tipo de dado não autorizado para validação.");
-            }
             return tipo.Name;
         }
         public void ValidaSeAEntidadeENula<T>(int id)
@@ -28,7 +24,7 @@ namespace ChallengeBackend4EdicaoAlura.Util
             dynamic? entidade;
             var tipo = ValidaOTipoDoDado<T>();
 
-            if (tipo == "Receita") { entidade = _dbContext.Receitas.Find(id); }
+            if (tipo == "ReceitaModel") { entidade = _dbContext.Receitas.Find(id); }
 
             else { entidade = _dbContext.Despesas.Find(id); }
 
@@ -41,7 +37,7 @@ namespace ChallengeBackend4EdicaoAlura.Util
             dynamic itens;
             var tipo = ValidaOTipoDoDado<T>();
 
-            if (tipo == "Receita")
+            if (tipo == "ReceitaModel")
             {
                 itens = _dbContext.Receitas.ToList();
             }

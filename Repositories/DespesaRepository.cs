@@ -20,11 +20,11 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
             _validacao = validacao;
         }
 
-        public Despesa CreateDespesa(PostDespesaDto createDespesaDto)
+        public DespesaModel CreateDespesa(PostDespesaDto createDespesaDto)
         {
-            var despesa = _mapper.Map<Despesa>(createDespesaDto);
+            var despesa = _mapper.Map<DespesaModel>(createDespesaDto);
 
-            _validacao.ValidaSeJaExisteNoBancoDeDados<Despesa>(createDespesaDto.Descricao, createDespesaDto.Data);
+            _validacao.ValidaSeJaExisteNoBancoDeDados<DespesaModel>(createDespesaDto.Descricao, createDespesaDto.Data);
 
             _dbContext.Despesas.Add(despesa);
             _dbContext.SaveChanges();
@@ -34,7 +34,7 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
         public void DeleteDespesa(int id)
         {
             var despesa = _dbContext.Despesas.Find(id);
-            _validacao.ValidaSeAEntidadeENula<Despesa>(id);
+            _validacao.ValidaSeAEntidadeENula<DespesaModel>(id);
             _dbContext.Despesas.Remove(despesa);
             _dbContext.SaveChanges();
         }
@@ -42,8 +42,6 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
         public List<ReadDespesaDto> GetDespesaByDate(int ano, int mes)
         {
             var despesasPorData = _dbContext.Despesas.Where(d => d.Data.Year == ano && d.Data.Month == mes).ToList();
-
-            //_validacao.ValidaSeAListaEstaVazia(despesasPorData);
 
             var dtoDespesasPorData = _mapper.Map<List<ReadDespesaDto>>(despesasPorData);
 
@@ -57,8 +55,6 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
             .ToUpper()
             .Contains(descricao.ToUpper())).ToList();
 
-            //_validacao.ValidaSeAListaEstaVazia(despesasComPalavraChaveNaDescricao);
-
             var dtoDespesasComPalavraChaveNaDescricao = _mapper.Map<List<ReadDespesaDto>>(despesasComPalavraChaveNaDescricao);
 
             return dtoDespesasComPalavraChaveNaDescricao;
@@ -68,7 +64,7 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
         public ReadDespesaDto GetDespesaById(int id)
         {
             var despesa = _dbContext.Despesas.Find(id);
-            _validacao.ValidaSeAEntidadeENula<Despesa>(id);
+            _validacao.ValidaSeAEntidadeENula<DespesaModel>(id);
             var readDespesaDto = _mapper.Map<ReadDespesaDto>(despesa);
             return readDespesaDto;
         }
@@ -84,8 +80,8 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
         {
             var despesa = _dbContext.Despesas.Find(id);
 
-            _validacao.ValidaSeAEntidadeENula<Despesa>(id);
-            _validacao.ValidaSeJaExisteNoBancoDeDados<Despesa>(putDespesaDto.Descricao, putDespesaDto.Data);
+            _validacao.ValidaSeAEntidadeENula<DespesaModel>(id);
+            _validacao.ValidaSeJaExisteNoBancoDeDados<DespesaModel>(putDespesaDto.Descricao, putDespesaDto.Data);
 
             _mapper.Map(putDespesaDto, despesa);
 

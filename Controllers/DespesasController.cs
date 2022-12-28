@@ -22,7 +22,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 var despesaCriada = _despesaRepository.CreateDespesa(createDespesaDto);
                 return CreatedAtAction(nameof(GetDespesaById), new { Id = despesaCriada.Id }, despesaCriada);
             }
-            catch (InvalidDataException e) { return BadRequest(e.Message); }
             catch (ArgumentException e) { return BadRequest(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
 
@@ -44,8 +43,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 return Ok(despesa);
             }
             catch (KeyNotFoundException e) { return NotFound(e.Message); }
-            catch (InvalidDataException e) { return BadRequest(e.Message); }
-            catch (ArgumentException e) { return BadRequest(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
         }
 
@@ -58,7 +55,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 return NoContent();
             }
             catch (KeyNotFoundException e) { return NotFound(e.Message); }
-            catch (InvalidDataException e) { return BadRequest(e.Message); }
             catch (ArgumentException e) { return BadRequest(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
         }
@@ -73,8 +69,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 return NoContent();
             }
             catch (KeyNotFoundException e) { return NotFound(e.Message); }
-            catch (InvalidDataException e) { return BadRequest(e.Message); }
-            catch (ArgumentException e) { return BadRequest(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
         }
 
@@ -86,7 +80,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 var despesaComPalavraChaveNaDescricao = _despesaRepository.GetDespesaByDescricao(descricao);
                 return Ok(despesaComPalavraChaveNaDescricao);
             }
-            catch (ArgumentException e) { return NotFound(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
         }
 
@@ -98,7 +91,6 @@ namespace ChallengeBackend4EdicaoAlura.Controllers
                 var despesasPorData = _despesaRepository.GetDespesaByDate(ano, mes);
                 return Ok(despesasPorData);
             }
-            catch (ArgumentException e) { return NotFound(e.Message); }
             catch (Exception e) { return NotFound(e.Message); }
         }
     }

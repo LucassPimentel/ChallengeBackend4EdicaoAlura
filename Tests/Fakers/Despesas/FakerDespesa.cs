@@ -2,11 +2,11 @@
 using ChallengeBackend4EdicaoAlura.Enums;
 using ChallengeBackend4EdicaoAlura.Models;
 
-namespace ChallengeBackend4EdicaoAlura.Tests.Fakers
+namespace ChallengeBackend4EdicaoAlura.Tests.Fakers.Despesas
 {
     public class FakerDespesa
     {
-        public static readonly Faker<Despesa> Faker = new Faker<Despesa>()
+        public static readonly Faker<DespesaModel> Faker = new Faker<DespesaModel>()
         {
             Locale = "pt_BR"
         }

@@ -2,9 +2,10 @@
 using ChallengeBackend4EdicaoAlura.Dtos.Receitas;
 using ChallengeBackend4EdicaoAlura.Interfaces;
 using ChallengeBackend4EdicaoAlura.Models;
+using ChallengeBackend4EdicaoAlura.Tests.Fakers.Receita;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using TestesChallengeBackEnd4Edicao.Fakers;
 
 namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
 {
@@ -19,8 +20,6 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             receitaController = new ReceitasController(receitaRepository.Object);
         }
 
-        // When-Given-then
-        // AAA
         [Fact]
         public void PostReceita_ReceitaWasAdded_Executed_ReturnStatusCreated()
         {
@@ -31,14 +30,14 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
                 Data = DateTime.Now
             };
 
-            receitaRepository.Setup(x => x.AddReceita(It.IsAny<PostReceitaDto>())).Returns(new Receita());
+            receitaRepository.Setup(x => x.AddReceita(It.IsAny<PostReceitaDto>())).Returns(new ReceitaModel());
 
             var result = receitaController.CreateReceita(postReceitaDto);
 
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status201Created, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status201Created);
         }
 
         [Fact]
@@ -49,8 +48,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.CreateReceita(It.IsAny<PostReceitaDto>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
@@ -61,8 +60,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.CreateReceita(It.IsAny<PostReceitaDto>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
@@ -73,8 +72,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.PutReceita(It.IsAny<int>(), It.IsAny<PutReceitaDto>());
             var statusCode = result as StatusCodeResult;
 
-            Assert.NotNull(result);
-            Assert.Equal(StatusCodes.Status204NoContent, statusCode.StatusCode);
+            result.Should().NotBeNull();
+            statusCode.StatusCode.Should().Be(StatusCodes.Status204NoContent);
 
         }
 
@@ -86,8 +85,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.PutReceita(It.IsAny<int>(), It.IsAny<PutReceitaDto>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -98,8 +97,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.PutReceita(It.IsAny<int>(), It.IsAny<PutReceitaDto>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
 
         }
 
@@ -111,8 +110,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.PutReceita(It.IsAny<int>(), It.IsAny<PutReceitaDto>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
@@ -124,8 +123,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
 
             var statusCode = result as StatusCodeResult;
 
-            Assert.NotNull(statusCode);
-            Assert.Equal(StatusCodes.Status204NoContent, statusCode.StatusCode);
+            statusCode.Should().NotBeNull();
+            statusCode.StatusCode.Should().Be(StatusCodes.Status204NoContent);
         }
 
         [Fact]
@@ -136,8 +135,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.DeleteReceita(It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
@@ -148,8 +147,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.DeleteReceita(It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -162,9 +161,9 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.GetReceitas();
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
-            Assert.Equal(fakeListReadReceitaDto, objectResult.Value);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+            objectResult.Value.Should().BeEquivalentTo(fakeListReadReceitaDto);
         }
 
         [Fact]
@@ -177,9 +176,9 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.GetReceitaById(It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
-            Assert.Equal(resultReadReceitaDto, objectResult.Value);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+            objectResult.Value.Should().BeEquivalentTo(resultReadReceitaDto);
         }
 
         [Fact]
@@ -190,9 +189,9 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.GetReceitaById(It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
-            Assert.Equal("Não encontrado...", objectResult.Value);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+            objectResult.Value.Should().Be("Não encontrado...");
         }
 
         [Fact]
@@ -203,8 +202,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.GetReceitaById(It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
@@ -217,9 +216,9 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.GetReceitaByDescricao(It.IsAny<string>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
-            Assert.Equal(listReadReceitaDto, objectResult.Value);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+            objectResult.Value.Should().Be(listReadReceitaDto);
         }
 
         [Fact]
@@ -230,8 +229,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.GetReceitaByDescricao(It.IsAny<string>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -242,8 +241,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.GetReceitaByDescricao(It.IsAny<string>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -256,9 +255,9 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.GetReceitaByDate(It.IsAny<int>(), It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status200OK, objectResult.StatusCode);
-            Assert.Equal(listReadReceitaDto, objectResult.Value);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status200OK);
+            objectResult.Value.Should().Be(listReadReceitaDto);
         }
 
         [Fact]
@@ -269,8 +268,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.GetReceitaByDate(It.IsAny<int>(), It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -281,8 +280,8 @@ namespace ChallengeBackend4EdicaoAlura.Tests.Receitas
             var result = receitaController.GetReceitaByDate(It.IsAny<int>(), It.IsAny<int>());
             var objectResult = result as ObjectResult;
 
-            Assert.NotNull(objectResult);
-            Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+            objectResult.Should().NotBeNull();
+            objectResult.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
     }
 }

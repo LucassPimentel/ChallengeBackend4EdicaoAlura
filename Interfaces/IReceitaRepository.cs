@@ -5,7 +5,7 @@ namespace ChallengeBackend4EdicaoAlura.Interfaces
 {
     public interface IReceitaRepository
     {
-        Receita AddReceita(PostReceitaDto postReceitaDto);
+        ReceitaModel AddReceita(PostReceitaDto postReceitaDto);
         void DeleteReceita(int id);
         List<ReadReceitaDto> GetReceitaByDate(int ano, int mes);
         List<ReadReceitaDto> GetReceitaByDescricao(string descricao);

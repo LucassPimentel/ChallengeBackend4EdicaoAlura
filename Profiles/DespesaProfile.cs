@@ -8,10 +8,10 @@ namespace ChallengeBackend4EdicaoAlura.Profiles
     {
         public DespesaProfile()
         {
-            CreateMap<PostDespesaDto, Despesa>();
-            CreateMap<Despesa, ReadDespesaDto>();
-            CreateMap<PutDespesaDto, Despesa>();
-            CreateMap<Despesa, PutDespesaDto>();
+            CreateMap<PostDespesaDto, DespesaModel>();
+            CreateMap<DespesaModel, ReadDespesaDto>();
+            CreateMap<PutDespesaDto, DespesaModel>();
+            CreateMap<DespesaModel, PutDespesaDto>();
         }
     }
 }

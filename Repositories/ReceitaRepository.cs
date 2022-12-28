@@ -22,11 +22,11 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
             _validacao = validacao;
         }
 
-        public Receita AddReceita(PostReceitaDto postReceitaDto)
+        public ReceitaModel AddReceita(PostReceitaDto postReceitaDto)
         {
-            var receita = _mapper.Map<Receita>(postReceitaDto);
+            var receita = _mapper.Map<ReceitaModel>(postReceitaDto);
 
-            _validacao.ValidaSeJaExisteNoBancoDeDados<Receita>(receita.Descricao, receita.Data);
+            _validacao.ValidaSeJaExisteNoBancoDeDados<ReceitaModel>(receita.Descricao, receita.Data);
 
             _dbContext.Add(receita);
             _dbContext.SaveChanges();
@@ -36,7 +36,7 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
         public void DeleteReceita(int id)
         {
             var receita = _dbContext.Receitas.Find(id);
-            _validacao.ValidaSeAEntidadeENula<Receita>(id);
+            _validacao.ValidaSeAEntidadeENula<ReceitaModel>(id);
             _dbContext.Remove(receita);
             _dbContext.SaveChanges();
         }
@@ -69,7 +69,7 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
         public ReadReceitaDto GetReceitaById(int id)
         {
             var receita = _dbContext.Receitas.Find(id);
-            _validacao.ValidaSeAEntidadeENula<Receita>(id);
+            _validacao.ValidaSeAEntidadeENula<ReceitaModel>(id);
             var readReceitaDto = _mapper.Map<ReadReceitaDto>(receita);
             return readReceitaDto;
         }
@@ -83,9 +83,9 @@ namespace ChallengeBackend4EdicaoAlura.Repositories
         public void PutReceita(int id, PutReceitaDto putReceitaDto)
         {
             var receita = _dbContext.Receitas.Find(id);
-            _validacao.ValidaSeAEntidadeENula<Receita>(id);
+            _validacao.ValidaSeAEntidadeENula<ReceitaModel>(id);
 
-            _validacao.ValidaSeJaExisteNoBancoDeDados<Receita>(putReceitaDto.Descricao, putReceitaDto.Data);
+            _validacao.ValidaSeJaExisteNoBancoDeDados<ReceitaModel>(putReceitaDto.Descricao, putReceitaDto.Data);
 
             _mapper.Map(putReceitaDto, receita);
             _dbContext.SaveChanges();

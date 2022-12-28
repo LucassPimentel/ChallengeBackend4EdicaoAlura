@@ -5,7 +5,7 @@ namespace ChallengeBackend4EdicaoAlura.Interfaces
 {
     public interface IDespesaRepository
     {
-        Despesa CreateDespesa(PostDespesaDto createDespesaDto);
+        DespesaModel CreateDespesa(PostDespesaDto createDespesaDto);
         void DeleteDespesa(int id);
         List<ReadDespesaDto> GetDespesaByDate(int ano, int mes);
         List<ReadDespesaDto> GetDespesaByDescricao(string descricao);

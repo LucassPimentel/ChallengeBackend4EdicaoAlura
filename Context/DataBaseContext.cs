@@ -10,8 +10,8 @@ namespace ChallengeBackend4EdicaoAlura.Context
 
         }
 
-        public DbSet<Receita> Receitas { get; set; }
-        public DbSet<Despesa> Despesas { get; set; }
+        public DbSet<ReceitaModel> Receitas { get; set; }
+        public DbSet<DespesaModel> Despesas { get; set; }
 
     }
 }
