@@ -2,7 +2,6 @@
 using ChallengeBackend4EdicaoAlura.Dtos.Despesas;
 using ChallengeBackend4EdicaoAlura.Dtos.Receitas;
 using ChallengeBackend4EdicaoAlura.Interfaces;
-using ChallengeBackend4EdicaoAlura.Tests.Fakers.Despesa;
 using ChallengeBackend4EdicaoAlura.Tests.Fakers.Despesas;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;

@@ -2,7 +2,7 @@
 using ChallengeBackend4EdicaoAlura.Dtos.Receitas;
 using ChallengeBackend4EdicaoAlura.Models;
 
-namespace ChallengeBackend4EdicaoAlura.Tests.Fakers.Receita
+namespace ChallengeBackend4EdicaoAlura.Tests.Fakers.Receitas
 {
     public class FakerPutReceitaDto
     {

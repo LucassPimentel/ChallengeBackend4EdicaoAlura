@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserControl", "UserControl.csproj", "{53BC0322-42FB-41B4-ACB0-C87F271103E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53BC0322-42FB-41B4-ACB0-C87F271103E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53BC0322-42FB-41B4-ACB0-C87F271103E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53BC0322-42FB-41B4-ACB0-C87F271103E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53BC0322-42FB-41B4-ACB0-C87F271103E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F540E282-23D1-44FA-8665-8DFF8100DD2D}
+	EndGlobalSection
+EndGlobal

@@ -2,7 +2,7 @@
 using ChallengeBackend4EdicaoAlura.Dtos.Receitas;
 using ChallengeBackend4EdicaoAlura.Interfaces;
 using ChallengeBackend4EdicaoAlura.Models;
-using ChallengeBackend4EdicaoAlura.Tests.Fakers.Receita;
+using ChallengeBackend4EdicaoAlura.Tests.Fakers.Receitas;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

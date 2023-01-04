@@ -1,13 +1,10 @@
 ﻿using FluentAssertions;
 using FluentResults;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Moq;
 using UserControl.Controllers;
 using UserControl.Dtos.Requests;
 using UserControl.Interfaces;
-using UserControl.Services;
 using Xunit;
 
 namespace UserControl.Unit_Tests.Controllers

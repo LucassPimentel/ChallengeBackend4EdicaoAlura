@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using ChallengeBackend4EdicaoAlura.Dtos.Despesas;
 
-namespace ChallengeBackend4EdicaoAlura.Tests.Fakers.Despesa
+namespace ChallengeBackend4EdicaoAlura.Tests.Fakers.Despesas
 {
     public class FakerReadDespesaDto
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChallengeBackend4EdicaoAlura.Tests.Fakers.Receita
+namespace ChallengeBackend4EdicaoAlura.Tests.Fakers.Receitas
 {
     public class FakerReadReceitaDto
     {
