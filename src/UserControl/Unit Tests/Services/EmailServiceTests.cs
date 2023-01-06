@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using MimeKit;
 using Moq;
 using UserControl.Interfaces;
@@ -12,26 +11,16 @@ namespace UserControl.Unit_Tests.Services
     public class EmailServiceTests
     {
         EmailService emailService;
-        Mock<IEmailService> mockEmailService;
-        Mock<IConfiguration> configuration;
-        Mock<IConfigurationSection> mockSection;
-
-
         public EmailServiceTests()
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile($"appsettings.json")
+                .AddUserSecrets<Program>()
+                .Build();
 
-            mockSection = new Mock<IConfigurationSection>();
+            emailService = new EmailService(configuration);
 
-            mockSection.Setup(x => x.Value).Returns("projetousercontrol@gmail.com");
-
-            configuration = new Mock<IConfiguration>();
-
-            mockEmailService = new Mock<IEmailService>();
-
-            var a = configuration.Setup(x => x.GetSection(It.Is<string>(k => k == "EmailSettings:From"))).Returns(mockSection.Object);
-
-
-            emailService = new EmailService(configuration.Object);
         }
 
         [Fact]
@@ -48,7 +37,7 @@ namespace UserControl.Unit_Tests.Services
         [Fact]
         public void SendEmailToConfirmAccount_WhenSuccefullyExecuted_ShouldReturnTrue()
         {
-           var result = emailService.SendEmailToConfirmAccount(new string[] { "teste@gmail.com" }, "Tema", 1, "activationCode");
+            var result = emailService.SendEmailToConfirmAccount(new string[] { "teste@gmail.com" }, "Tema", 1, "activationCode");
 
             result.Should().BeTrue();
         }
@@ -56,7 +45,7 @@ namespace UserControl.Unit_Tests.Services
         [Fact]
         public void SendEmailToConfirmAccount_WhenExecutedIsFailed_ShouldReturnFalse()
         {
-            var result = emailService.SendEmailToConfirmAccount(new string[] {}, "Tema", 1, "activationCode");
+            var result = emailService.SendEmailToConfirmAccount(new string[] { }, "Tema", 1, "activationCode");
 
             result.Should().BeFalse();
         }

@@ -3,10 +3,17 @@ using ChallengeBackend4EdicaoAlura.Interfaces;
 using ChallengeBackend4EdicaoAlura.Repositories;
 using ChallengeBackend4EdicaoAlura.Util;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//builder.Services.AddAuthentication(x =>
+//{
+//    x.DefaultAuthenticateScheme = 
+//})
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

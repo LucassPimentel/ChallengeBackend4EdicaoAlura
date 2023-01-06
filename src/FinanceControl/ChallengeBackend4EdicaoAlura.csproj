@@ -41,4 +41,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UserControl\UserControl.csproj" />
+  </ItemGroup>
+
 </Project>

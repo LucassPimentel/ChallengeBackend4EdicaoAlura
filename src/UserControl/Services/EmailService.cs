@@ -36,9 +36,11 @@ namespace UserControl.Services
             {
                 try
                 {
-                    client.Connect("smtp.gmail.com", 465, true);
+                    client.Connect(_configuration.GetValue<string>("EmailSettings:SmtpServer"),
+    _configuration.GetValue<int>("EmailSettings:Port"), true);
                     client.AuthenticationMechanisms.Remove("XOUATH2");
-                    client.Authenticate("projetousercontrol@gmail.com", "ydhrogeobwktzpuh");
+                    client.Authenticate(_configuration.GetValue<string>("EmailSettings:From"),
+                        _configuration.GetValue<string>("EmailSettings:Password"));
 
                     client.Send(bodyMessage);
                     return true;
